@@ -1,0 +1,184 @@
+\documentclass[12pt, letterpaper]{article}
+
+\usepackage[letterpaper,left=0.7in,right=0.7in,top=\dimexpr15mm+1.5\baselineskip,bottom=0.7in]{geometry}
+\usepackage{amsthm}
+\usepackage{newpxtext}
+\usepackage[T1]{fontenc}
+\usepackage[complete,subscriptcorrection,slantedGreek,nofontinfo,mtpbb,mtpcal,mtpscr,mtpfrak]{mtpro2}
+\usepackage{float}
+\usepackage{mathtools}
+\usepackage{mathrsfs}
+
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{multicol}
+
+\usepackage{tabularx}
+\usepackage[table]{xcolor}
+
+\usepackage{listings}
+\lstset{basicstyle=\ttfamily,breaklines=true}
+\lstset{framextopmargin=0.2in,framexbottommargin=0.2in}
+
+\usepackage{fancyhdr}
+\setlength{\headheight}{15.2pt}
+\pagestyle{fancyplain}
+\fancyhf{}
+\fancyhead[C]{Calculus 3}
+\fancyhead[L]{5.1 Elements of Integration}
+\fancyhead[R]{5 Integration}
+
+\DeclareMathOperator{\arcsec}{arcsec}
+\DeclareMathOperator{\arccot}{arccot}
+\DeclareMathOperator{\arccsc}{arccsc}
+\DeclareMathOperator{\csch}{csch}
+\DeclareMathOperator{\sech}{sech}
+
+\makeatletter
+% CM-only brace fonts
+\DeclareSymbolFont{cmbraces}{OMS}{cmsy}{m}{n}
+\DeclareSymbolFont{cmbracelarge}{OMX}{cmex}{m}{n}
+\SetSymbolFont{cmbraces}{bold}{OMS}{cmsy}{b}{n}
+
+\AtBeginDocument{%
+  % allow re-declare
+  \let\lbrace\relax \let\rbrace\relax
+  \let\{\relax      \let\}\relax
+
+  % map BOTH names to CM braces (small from cmsy, extensibles from cmex)
+  \DeclareMathDelimiter{\lbrace}{\mathopen}{cmbraces}{"66}{cmbracelarge}{"08}
+  \DeclareMathDelimiter{\rbrace}{\mathclose}{cmbraces}{"67}{cmbracelarge}{"09}
+  \DeclareMathDelimiter{\{}     {\mathopen}{cmbraces}{"66}{cmbracelarge}{"08}
+  \DeclareMathDelimiter{\}}     {\mathclose}{cmbraces}{"67}{cmbracelarge}{"09}
+}
+\makeatother
+
+\newcommand{\smartwidehat}[1]{%
+  \mathchoice{\widehat{#1}}{\widehat{#1}}{\hat{#1}}{\hat{#1}}%
+}
+
+\renewcommand{\vec}[1]{\overline{#1}}
+\DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
+\newcommand{\myv}[1]{\vec{\mathrm #1}}
+\newcommand{\myunitv}[1]{\smartwidehat{\mathrm #1}}
+\newcommand{\mynorm}[1]{\norm{\vec{\mathrm #1}}}
+\newcommand{\proj}[2][]{\mathrm{proj}_{\myv{#1}}\myv{#2}}
+\newcommand{\mycomp}[2][]{\mathrm{comp}_{\myv{#1}}\myv{#2}}
+\newcommand{\mycross}[2]{\myv{#1} \times \myv{#2}}
+\newcommand{\mydot}[2]{\myv{#1} \cdot \myv{#2}}
+\newcommand{\rf}[1]{\vec{\mathrm r}(#1)}
+\newcommand{\SF}[1]{\vec{\mathrm s}(#1)}
+\newcommand{\vf}[2]{\vec{\mathrm #1}(#2)}
+\newcommand{\dt}[2][]{\frac{\mathrm{d}#1}{\mathrm{d}#2}}
+\newcommand{\pdt}[2][]{\frac{\partial #1}{\partial #2}}
+\newcommand{\delt}[2][]{\frac{\partial{#1}}{\partial{#2}}}
+%\newcommand{\ut1}[1]{\ensuremath{\mathbf{T}_{\vec{\mathrm #1}}(t)}}
+\NewDocumentCommand{\uT}{ O{t} m }{%
+  \ensuremath{\vec{\mathrm{T}}_{\myv{#2}}\!\left(#1\right)}%
+}
+\newcommand{\grad}{\nabla\!}
+
+\newcommand{\ihat}{\boldsymbol{\hat{\textbf{\i}}}}
+\newcommand{\jhat}{\boldsymbol{\hat{\textbf{\j}}}}
+\newcommand{\khat}{\boldsymbol{\hat{\textbf{k}}}}
+\newcommand{\dx}[1][]{\,\mathrm{d}\hspace{-0.05em}#1}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\J}{\mathrm{J}}
+
+\newcommand{\myint}[2][]{\int_{#2}\!#1}
+\newcommand{\myinte}[3][]{\int_{#2}\!#1 \dx[#3]}
+
+
+\usepackage{xparse}
+\NewDocumentCommand{\pd}{ O{1} m m }{%
+  \frac{\partial^{#1} #2}{\partial #3^{#1}}%
+}
+\NewDocumentCommand{\pdm}{ O{1} m m m }{%
+  \frac{\partial^{#1} #2}{\partial #3\,\partial #4}%
+}
+
+\newcommand{\eqprefix}{1.1}
+\renewcommand{\theequation}{\eqprefix.\arabic{equation}}
+% Start from 1 instead of 0
+\setcounter{equation}{0}
+
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+%\usepackage{ifthen} x^3 - 14 x^2 + 60 x - 48
+\usepackage{pgfplots}
+\pgfplotsset{compat=newest, set layers}
+\usepackage{wrapfig}
+\usepackage{setspace}
+\usepgfplotslibrary{fillbetween}
+\usetikzlibrary{calc,angles,quotes,arrows.meta}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric}
+
+% -------- sizing tuned to textwidth --------
+\newlength{\floww}
+\setlength{\floww}{.46\textwidth} % width of each branch box
+\newlength{\mainw}
+\setlength{\mainw}{.96\textwidth} % width of main (full) boxes
+
+\tikzset{
+  box/.style={
+    draw, rounded corners, align=center, font=\small,
+    inner xsep=6pt, inner ysep=6pt, minimum width=\mainw
+  },
+  smallbox/.style={
+    draw, rounded corners, align=center, font=\small,
+    inner xsep=6pt, inner ysep=6pt, minimum width=\floww
+  },
+  arrow/.style={-Latex, thick},
+}
+
+%\usepgfplotslibrary{external} 
+%\tikzexternalize
+
+\usepgfplotslibrary{colormaps}
+
+% Safe definition: return NaN near (0,0) so the plot jumps over the singularity
+\pgfmathdeclarefunction{fxy}{2}{%
+  \pgfmathparse{ (abs(#1)<1e-4 && abs(#2)<1e-4) ? NaN : (#1*#2)/(#1*#1 + #2*#2) }%
+}
+
+\definecolor{MBlue}{RGB}{0, 80, 180}
+\definecolor{definitionColor}{RGB}{0, 60, 120}
+\definecolor{exampleColor}{RGB}{100, 190, 255}
+\definecolor{theoremColor}{RGB}{0 , 120, 40}
+
+\linespread{1.4}
+\usetikzlibrary{arrows.meta}
+
+\begin{document}
+\setlength{\fboxsep}{10pt}
+\tikzset{>={Stealth[length=5pt,width=5pt]}}
+\noindent
+Let
+\begin{equation*}
+    k(n) = 2^{n+1}-3
+    \qquad\textrm{and}\qquad
+    p_{N}(z) = z + \sum_{k=0}^{N}b_{k}z^{-k}.
+\end{equation*}
+Suppose we know the constants $b_{0}, b_{1}, \ldots, b_{j-1}$.
+We also have the recursion relation
+\begin{equation*}
+    A_{n}(z) = (A_{n-1}(z))^{2} + z.
+\end{equation*}
+We know that for a given $n$, that the coefficient of
+$z^{2^{n}-j-1}$ is zero for $j \leq k(n)$.
+Suppose we know $b_{0}, b_{1}, \ldots, b_{j-1}$.
+Then examining $A_{n}(p_{j}(z))$ allows us to compute $b_{j}.$
+For example, since $k(1) = 1$, we can look at
+\begin{equation*}
+    A_{1}(p_{1}(z))
+    = z^{2} + (2b_{0}+1)z + (2b_{1} + b_{0}^{2} + b_{0})z^{0} + (2b_{0}+b_{1})z^{-1} + b_{1}^{2}z^{-2},
+\end{equation*}
+where we know that
+\begin{equation*}
+    2b_{0}+1 = 0
+    \qquad\textrm{and}\qquad
+    2b_{1} + b_{0}^{2} + b_{0} = 0,
+\end{equation*}
+which gives $b_{0} = -1/2$ and $b_{1} = 1/8$.
+
+\end{document}

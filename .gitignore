@@ -1,0 +1,8 @@
+.vscode/
+*.log
+*.aux
+*.gz
+*.fdb_latexmk
+*.fls
+*.md5
+*.dpth
