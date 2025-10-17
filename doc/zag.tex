@@ -20,13 +20,13 @@
 \lstset{basicstyle=\ttfamily,breaklines=true}
 \lstset{framextopmargin=0.2in,framexbottommargin=0.2in}
 
-\usepackage{fancyhdr}
-\setlength{\headheight}{15.2pt}
-\pagestyle{fancyplain}
-\fancyhf{}
-\fancyhead[C]{Calculus 3}
-\fancyhead[L]{5.1 Elements of Integration}
-\fancyhead[R]{5 Integration}
+%\usepackage{fancyhdr}
+%\setlength{\headheight}{15.2pt}
+%\pagestyle{fancyplain}
+%\fancyhf{}
+%\fancyhead[C]{Calculus 3}
+%\fancyhead[L]{  5.1 Elements of Integration}
+%\fancyhead[R]{5 Integration}
 
 \DeclareMathOperator{\arcsec}{arcsec}
 \DeclareMathOperator{\arccot}{arccot}
@@ -155,14 +155,14 @@
 \noindent
 Let
 \begin{equation*}
-    k(n) = 2^{n+1}-3
-    \qquad\textrm{and}\qquad
-    p_{N}(z) = z + \sum_{k=0}^{N}b_{k}z^{-k}.
+  k(n) = 2^{n+1}-3
+  \qquad\textrm{and}\qquad
+  p_{N}(z) = z + \sum_{k=0}^{N}b_{k}z^{-k}.
 \end{equation*}
 Suppose we know the constants $b_{0}, b_{1}, \ldots, b_{j-1}$.
 We also have the recursion relation
 \begin{equation*}
-    A_{n}(z) = (A_{n-1}(z))^{2} + z.
+  A_{n}(z) = (A_{n-1}(z))^{2} + z.
 \end{equation*}
 We know that for a given $n$, that the coefficient of
 $z^{2^{n}-j-1}$ is zero for $j \leq k(n)$.
@@ -170,14 +170,14 @@ Suppose we know $b_{0}, b_{1}, \ldots, b_{j-1}$.
 Then examining $A_{n}(p_{j}(z))$ allows us to compute $b_{j}.$
 For example, since $k(1) = 1$, we can look at
 \begin{equation*}
-    A_{1}(p_{1}(z))
-    = z^{2} + (2b_{0}+1)z + (2b_{1} + b_{0}^{2} + b_{0})z^{0} + (2b_{0}+b_{1})z^{-1} + b_{1}^{2}z^{-2},
+  A_{1}(p_{1}(z))
+  = z^{2} + (2b_{0}+1)z + (2b_{1} + b_{0}^{2} + b_{0})z^{0} + (2b_{0}+b_{1})z^{-1} + b_{1}^{2}z^{-2},
 \end{equation*}
 where we know that
 \begin{equation*}
-    2b_{0}+1 = 0
-    \qquad\textrm{and}\qquad
-    2b_{1} + b_{0}^{2} + b_{0} = 0,
+  2b_{0}+1 = 0
+  \qquad\textrm{and}\qquad
+  2b_{1} + b_{0}^{2} + b_{0} = 0,
 \end{equation*}
 which gives $b_{0} = -1/2$ and $b_{1} = 1/8$.
 
